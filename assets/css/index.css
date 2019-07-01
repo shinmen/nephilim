@@ -35,3 +35,11 @@ body, html {
     }  
 
 }
+
+#sort-ka {
+  display: inline-flex;
+}
+#sort-ka .ka-element img {
+  width: 3em;
+  height: 3em;
+}
