@@ -21,17 +21,17 @@ body, html {
 }
 
 .card {
-    width: 60%;
+    width: 18rem;
     margin-right: 3rem;
 }
 .card-img-top {
-    height: 14rem;
+  max-height: 14rem;
 }
 
 #sort-ka {
   display: inline-flex;
 }
 #sort-ka .ka-element img {
-  width: 5rem;
-  height: 5rem;
+  width: 7rem;
+  height: 7rem;
 }
