@@ -53,15 +53,16 @@ const sortElements = () => {
         const ratio = ratios[i];
         return buildElements(ratio, el.dataset.element);
     });
+
     sorted.map((el) => {
-        const elementCard = document.querySelector(`#card-container .${el.getKaValue()}`);
+        const elementCard = document.querySelector(`#card-container .${el.getName()}`);
     })
 }
 
-$('#sort-ka').sortable().bind('sortupdate', function(e, ui) {
-    sortElements();
-});
+$('#sort-ka').sortable({
+    update: function( event, ui ) {
+        sortElements();
+    }
+});    
 
 sortElements();
-
-
