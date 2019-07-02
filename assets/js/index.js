@@ -41,8 +41,7 @@ class KaElement {
     }
 }
 
-const buildElements = (ratios, element) => {
-    const ratio = ratios[i];
+const buildElements = (ratio, element) => {
     const totalKa = document.querySelector('#ka-input');
     return new KaElement(element, ratio, totalKa.value, bonusMatrix);
 }
