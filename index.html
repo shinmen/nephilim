@@ -8,43 +8,33 @@
    <body>
         <div class="container-fluid">
             <div class="row justify-content-md-center">
-                <form method="post" action="" class="col align-self-center">
-                    <div class="form-group col-12 col-md-6">
-                        <label class="" for="ka-input">KA</label>
+                <form method="post" action="" class="">
+                    <div class="form-group">
+                        <label class="" for="ka-input">Total point de KA</label>
                         <input class="form-control form-control-lg" name="ka-input" id="ka-input" type="number" value="30" min="0" max="200" step="1"/>                            
                     </div>
                 </form>
             </div>
             <div class="row no-gutters">
-              <ul id="sort-ka" class="list-inline">
+              <ul id="sort-ka" class="list-inline col">
                 <a href="#" class="list-inline-item list-group-item-action disabled text-center">
                   Majeur
                 </a>
-                <a href="#" data-element="fire" class="list-inline-item list-group-item-action ka-element">
-                  <img src="assets/images/fire.jpg" class="card-img-top" alt="...">
-                </a>
-                <a href="#" data-element="air" class="list-inline-item list-group-item-action ka-element">
-                  <img src="assets/images/air.jpg" class="card-img-top" alt="...">
-                </a>
-                <a href="#" data-element="water" class="list-inline-item list-group-item-action ka-element">
-                  <img src="assets/images/water.jpg" class="card-img-top" alt="...">
-                </a>
-                <a href="#" data-element="earth" class="list-inline-item list-group-item-action ka-element">
-                  <img src="assets/images/earth.jpg" class="card-img-top" alt="...">
-                </a>
-                <a href="#" data-element="moon" class="list-inline-item list-group-item-action ka-element">
-                  <img src="assets/images/moon.jpg" class="card-img-top" alt="...">
-                </a>
+                <a href="#" data-element="fire" class="list-inline-item list-group-item-action ka-element fire"></a>
+                <a href="#" data-element="air" class="list-inline-item list-group-item-action ka-element air"></a>
+                <a href="#" data-element="water" class="list-inline-item list-group-item-action ka-element water"></a>
+                <a href="#" data-element="earth" class="list-inline-item list-group-item-action ka-element earth"></a>
+                <a href="#" data-element="moon" class="list-inline-item list-group-item-action ka-element moon"></a>
                 <a href="#" class="list-inline-item list-group-item-action disabled text-center">
                   Opposé majeur
                 </a>
               </ul>
             </div>
             <div id="card-container" class="row no-gutters">
-                <div class="element col-12 fire">
+                <div class="element col fire-card">
                     <div class="card">
-                      <img src="assets/images/fire.jpg" class="card-img-top" alt="...">
-                      <ul class="list-group">
+                      <div class="img-container fire"></div>
+                     <ul class="list-group">
                       <li class="list-group-item d-flex justify-content-between align-items-center bonus">
                         Bonus
                         <span class="badge badge-primary badge-pill">0</span>
@@ -60,9 +50,9 @@
                     </ul>
                     </div>
                 </div>
-                <div class="element col-12 air">
+                <div class="element col air-card">
                     <div class="card">
-                      <img src="assets/images/air.jpg" class="card-img-top" alt="...">
+                      <div class="img-container air"></div>
                       <ul class="list-group">
                       <li class="list-group-item d-flex justify-content-between align-items-center bonus">
                         bonus
@@ -79,10 +69,10 @@
                     </ul>
                     </div>
                 </div>
-                <div class="element col-12 water">
+                <div class="element col water-card">
                     <div class="card">
-                      <img src="assets/images/water.jpg" class="card-img-top" alt="...">
-                      <ul class="list-group">
+                    <div class="img-container water"></div>
+                    <ul class="list-group">
                       <li class="list-group-item d-flex justify-content-between align-items-center bonus">
                         Bonus
                         <span class="badge badge-primary badge-pill">0</span>
@@ -98,10 +88,10 @@
                     </ul>
                     </div>
                 </div>
-                <div class="element col-12 earth">
+                <div class="element col earth-card">
                     <div class="card">
-                      <img src="assets/images/earth.jpg" class="card-img-top" alt="...">
-                      <ul class="list-group">
+                    <div class="img-container earth"></div>
+                    <ul class="list-group">
                       <li class="list-group-item d-flex justify-content-between align-items-center bonus">
                         Bonus
                         <span class="badge badge-primary badge-pill">0</span>
@@ -117,10 +107,10 @@
                     </ul>
                     </div>
                 </div>
-                <div class="element col-12 moon">
+                <div class="element col moon-card">
                     <div class="card">
-                      <img src="assets/images/moon.jpg" class="card-img-top" alt="...">
-                      <ul class="list-group">
+                    <div class="img-container moon"></div>
+                    <ul class="list-group">
                       <li class="list-group-item d-flex justify-content-between align-items-center bonus">
                         Bonus
                         <span class="badge badge-primary badge-pill">0</span>

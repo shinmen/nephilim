@@ -74,7 +74,7 @@ const sortElements = () => {
     });
 
     sorted.map((el) => {
-        const elementCard = document.querySelector(`#card-container .${el.getName()}`);
+        const elementCard = document.querySelector(`#card-container .${el.getName()}-card`);
         elementCard.querySelector('.bonus span').innerHTML = el.getBonus();
         elementCard.querySelector('.roll span').innerHTML = `${el.getKaValue() * 2}%`;
         elementCard.querySelector('.pentacle span').innerHTML = el.getKaValue();
@@ -82,6 +82,7 @@ const sortElements = () => {
 }
 
 $('#sort-ka').sortable({
+    items: ".ka-element",
     update: function( event, ui ) {
         console.log(ui);
         debounce(sortElements(), 500);

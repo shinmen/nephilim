@@ -20,8 +20,42 @@ body, html {
   margin-bottom: 3rem;
 }
 
+.ka-element {
+  height: 40%;
+  width: 30%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.img-container {
+  height: 70%;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 auto;
+}
+
+.fire {
+  background-image: url('../images/fire.jpg')
+}
+.water {
+  background-image: url('../images/water.jpg')
+}
+.air {
+  background-image: url('../images/air.jpg')
+}
+.earth {
+  background-image: url('../images/earth.jpg')
+}
+.moon {
+  background-image: url('../images/moon.jpg')
+}
+
 .card {
     width: 18rem;
+    height: 20rem;
     margin-right: 3rem;
 }
 .card-img-top {
@@ -29,7 +63,7 @@ body, html {
 }
 
 #sort-ka {
-  display: inline-flex;
+  height: 20rem;
 }
 #sort-ka .ka-element img {
   width: 7rem;
