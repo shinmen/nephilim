@@ -1,4 +1,4 @@
-$("input[type='number']").inputSpinner();
+$("#ka-input").inputSpinner();
 
 const bonusMatrix = [
     {"min": 1, "max": 4, "value": 1},
@@ -14,6 +14,25 @@ const bonusMatrix = [
     {"min": 70, "max": 79, "value": 11},
     {"min": 80, "max": 100, "value": 12},
 ];
+
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+        var context = this, args = arguments;
+        var later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+};
 
 const ratios = [1, 1.25, 1.666666667, 2.5, 5];
 
@@ -35,9 +54,9 @@ class KaElement {
 
     getBonus() {
         const bonus = this.bonusMatrix.filter((el) => {
-            getKaValue() <= el.max && getKaValue() >= el.min
-        })
-        return bonus.value
+            return this.getKaValue() <= el.max && this.getKaValue() >= el.min
+        });
+        return bonus[0].value
     }
 }
 
@@ -56,13 +75,22 @@ const sortElements = () => {
 
     sorted.map((el) => {
         const elementCard = document.querySelector(`#card-container .${el.getName()}`);
+        elementCard.querySelector('.bonus span').innerHTML = el.getBonus();
+        elementCard.querySelector('.roll span').innerHTML = `${el.getKaValue() * 2}%`;
+        elementCard.querySelector('.pentacle span').innerHTML = el.getKaValue();
     })
 }
 
 $('#sort-ka').sortable({
     update: function( event, ui ) {
-        sortElements();
+        console.log(ui);
+        debounce(sortElements(), 500);
     }
 });    
+
+document.querySelector('#ka-input').addEventListener('change', (event) => {
+    debounce(sortElements(), 500);
+    event.preventDefault();
+})
 
 sortElements();
