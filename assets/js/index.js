@@ -22,10 +22,9 @@ class KaHarmony {
 }
 
 class KaElement {
-    constructor(name, ratio, totalKa, bonusMatrix) {
+    constructor(name, ratio, bonusMatrix) {
         this.name = name;
         this.ratio = ratio;
-        this.totalKa = totalKa;
         this.bonusMatrix = bonusMatrix;
     }
 
@@ -34,7 +33,7 @@ class KaElement {
     }
 
     getKaValue() {
-        return Math.ceil(this.totalKa/this.ratio);
+        return Math.ceil(totalKa/this.ratio);
     }
 
     getBonus() {
@@ -67,13 +66,15 @@ const harmonyMatrix = {
     'moon': new KaHarmony('moon', ['water', 'earth'], ['fire', 'air']),
     'earth': new KaHarmony('earth', ['moon', 'fire'], ['water', 'air'])
 };
-const kaHarmony = {};
+const kaHarmony = [];
+let totalKa = 0;
+const ratios = [1, 1.25, 1.666666667, 2.5, 5];
 
 // Returns a function, that, as long as it continues to be invoked, will not
 // be triggered. The function will be called after it stops being called for
 // N milliseconds. If `immediate` is passed, trigger the function on the
 // leading edge, instead of the trailing.
-function debounce(func, wait, immediate) {
+const debounce = (func, wait, immediate) => {
     var timeout;
     return function() {
         var context = this, args = arguments;
@@ -88,22 +89,17 @@ function debounce(func, wait, immediate) {
     };
 };
 
-const ratios = [1, 1.25, 1.666666667, 2.5, 5];
+const hasFilledNeutral = () => { return kaHarmony.length == 3; }
+const hasFilledOpposite = () => { return kaHarmony.length == 5; }
+
 
 const buildElement = (ratio, element) => {
-    const totalKa = document.querySelector('#ka-input');
-    return new KaElement(element, ratio, totalKa.value, bonusMatrix);
+    return new KaElement(element, ratio, bonusMatrix);
 }
 
 const sortElements = () => {
-    const totalKa = document.querySelector('#ka-input');
-    const kas = Array.from(document.querySelectorAll('#sort-ka .ka-element'));
-    const sorted = kas.map((el, i) => {
-        const ratio = ratios[i];
-        return buildElement(ratio, el.dataset.element);
-    });
-
-    sorted.map((el) => {
+    totalKa = document.querySelector('#ka-input').value;
+    kaHarmony.map((el) => {
         const elementCard = document.querySelector(`#card-container .${el.getName()}-card`);
         elementCard.querySelector('.bonus span').innerHTML = el.getBonus();
         elementCard.querySelector('.roll span').innerHTML = `${el.getKaValue() * 2}%`;
@@ -111,51 +107,75 @@ const sortElements = () => {
     })
 };
 
-const enableKaMatching = () => {
-
-}
-
-// $('#sort-ka').sortable({
-//     items: ".ka-element",
-//     update: function( event, ui ) {
-//         console.log(ui);
-//         debounce(sortElements(), 500);
-//     }
-// });  
-// 
 $('#sort-ka .ka-element').draggable({ revert: "invalid" });
 
-$(".ka-element-droppable" ).droppable({
+$('#droppable .dominant').droppable({
     accept: "#sort-ka .ka-element",
     drop: (event, ui) => {
-        const kaPosition = event.target.dataset.position;
+        const draggedElement = ui.draggable[0];
+        const element = draggedElement.dataset.element;
+        const droppedHarmony = event.target;
+        const ratio = droppedHarmony.dataset.ratio;
+        kaHarmony.push(buildElement(ratio, element));
+        droppedHarmony.classList.add('d-none');
+        draggedElement.classList.add('d-none');
+        sortElements();
+        Array.from(document.querySelectorAll('#droppable .neutral'))
+            .map((el) => {
+                el.classList.toggle('d-none');
+            });
+        const harmony = harmonyMatrix[element];
+        const oppositesElement = harmony.getOpposites();
+        oppositesElement.map((el) => {
+            const elementCard = document.querySelector(`#sort-ka .${el}`);
+            elementCard.classList.add('d-none', 'opposite');
+        });
+    },
+});
+
+$('#droppable .neutral').droppable({
+    accept: "#sort-ka .ka-element",
+    drop: (event, ui) => {
         const element = ui.draggable[0].dataset.element;
         const ratio = event.target.dataset.ratio;
-        kaHarmony[kaPosition] = buildElement(ratio, element);
+        kaHarmony.push(buildElement(ratio, element));
+        event.target.classList.add('d-none');
+        ui.draggable[0].classList.add('d-none');
 
-        if(kaHarmony['dominant'] != undefined && kaPosition != 'dominant') {
-            const dominantKa = kaHarmony['dominant'];
-            const harmony = harmonyMatrix[dominantKa.getName()];
-            console.log(harmony.isNeutral(element));
-            if (harmony.isNeutral(element)) {
-                $('.ka-element-droppable.opposite').toggleClass('invisible');
-            }
-        }
-    },
-    over: (event, ui) => {
-        const kaPosition = event.target.dataset.position;
-        console.log(kaPosition);
-        if (kaHarmony[kaPosition] != undefined) {
-            $(event.target).droppable('disable');
+        if (!hasFilledNeutral()) {
             return;
         }
+        sortElements();
+
+        Array.from(document.querySelectorAll('#droppable .opposite'))
+            .map((el) => {
+                el.classList.toggle('d-none');
+            });
+        Array.from(document.querySelectorAll('#sort-ka .opposite'))
+            .map((el) => {
+                el.classList.toggle('d-none');
+            });
     },
-});  
+});
+
+$('#droppable .opposite').droppable({
+    accept: "#sort-ka .ka-element",
+    drop: (event, ui) => {
+        const element = ui.draggable[0].dataset.element;
+        const ratio = event.target.dataset.ratio;
+        kaHarmony.push(buildElement(ratio, element));
+        event.target.classList.add('d-none');
+        ui.draggable[0].classList.add('d-none');
+        if (!hasFilledOpposite()) {
+            return;
+        }
+        document.querySelector('#sort-ka').classList.add('d-none');
+        sortElements();
+    }
+}); 
 
 document.querySelector('#ka-input').addEventListener('change', (event) => {
     debounce(sortElements(), 500);
     event.preventDefault();
 });
-$("#ka-input").inputSpinner();
-sortElements();
-
+totalKa = document.querySelector('#ka-input').value;
