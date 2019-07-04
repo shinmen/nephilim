@@ -61,7 +61,7 @@ const bonusMatrix = [
 
 const harmonyMatrix = {
     'fire': new KaHarmony('fire', ['air', 'earth'], ['water', 'moon']),
-    'air': new KaHarmony('air', ['fire', 'eau'], ['water', 'earth']),
+    'air': new KaHarmony('air', ['fire', 'water'], ['moon', 'earth']),
     'water': new KaHarmony('water', ['air', 'moon'], ['fire', 'earth']),
     'moon': new KaHarmony('moon', ['water', 'earth'], ['fire', 'air']),
     'earth': new KaHarmony('earth', ['moon', 'fire'], ['water', 'air'])
