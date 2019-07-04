@@ -178,4 +178,10 @@ document.querySelector('#ka-input').addEventListener('change', (event) => {
     debounce(sortElements(), 500);
     event.preventDefault();
 });
+
+document.querySelector('form').addEventListener('submit', (event) => {
+    sortElements();
+    event.preventDefault();
+});
+
 totalKa = document.querySelector('#ka-input').value;
